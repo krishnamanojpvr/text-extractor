@@ -14,7 +14,7 @@ def home():
 
 import io
 
-@app.route('/upload', methods=['POST'])
+@app.post('/upload')
 def upload_file():
     if 'imgUpload' not in request.files:
         return 'No file part'
