@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <style></style>
+    <script>
+      window.onload = function () {
+        document.getElementById("uploadForm").onsubmit = function (event) {
+          event.preventDefault();
+          var formData = new FormData(this);
+          fetch("/upload", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              document.getElementById("response").value = data;
+            });
+        };
+      };
+
+      function copyToClipboard() {
+        var copyText = document.getElementById("response");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+        document.execCommand("copy");
+      }
+    </script>
+  </head>
+  <body class="p-5">
+    <div class="m-5">
+      <form
+        id="uploadForm"
+        action="/upload"
+        method="post"
+        enctype="multipart/form-data"
+        class="d-flex"
+      >
+        <div class="form-group d-flex">
+          <label for="imgUpload">Upload image:</label>
+          <input
+            type="file"
+            id="imgUpload"
+            name="imgUpload"
+            accept="image/*"
+            class="form-control-file"
+          />
+        </div>
+        <div class="form-group">
+          <input type="submit" class="btn btn-primary" />
+        </div>
+      </form>
+      <div class="form-group">
+        <label for="response">Response:</label>
+        <textarea id="response" readonly class="form-control"></textarea>
+      </div>
+      <div class="btn-group" role="group">
+        <button onclick="copyToClipboard()" class="btn btn-secondary">
+          Copy to clipboard
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
