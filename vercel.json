@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "text-extractor",
+    "builds": [
+      {
+        "src": "app.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "app.py"
+      }
+    ]
+  }
