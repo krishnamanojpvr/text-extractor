@@ -18,10 +18,13 @@ import io
 def upload_file():
     if 'imgUpload' not in request.files:
         return 'No file part'
-    file = request.files['imgUpload']
-    image = Image.open(io.BytesIO(file.read()))
-    text = pytesseract.image_to_string(image)
-    return text
+    try:
+        file = request.files['imgUpload']
+        image = Image.open(io.BytesIO(file.read()))
+        text = pytesseract.image_to_string(image)
+        return text
+    except Exception as e:
+        return str(e)
 
 if __name__ == '__main__':
     app.run(debug=True)
